@@ -1,4 +1,5 @@
 # quickchart-php
+[![Packagist VERSION](http://img.shields.io/packagist/v/ianw/quickchart.svg?style=flat)](https://packagist.org/packages/ianw/quickchart)
 
 A PHP client for the [quickchart.io](https://quickchart.io/) chart image API.
 
