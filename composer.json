@@ -1,0 +1,22 @@
+{
+  "name": "ianw/quickchart",
+  "description": "QuickChart chart API",
+  "keywords": [
+    "chart", "charts", "image", "bar-chart", "line-chart", "chart-api"
+  ],
+  "homepage": "http://github.com/typpo/quickchart-php",
+  "license": "MIT",
+  "authors": [{
+    "name": "Ian Webster",
+    "homepage": "https://quickchart.io/"
+  }],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "archive": {
+    "exclude": ["*", "!QuickChart.php", "!README.md", "!composer.json"]
+  },
+  "autoload": {
+    "psr-4": {"": ""}
+  }
+}
