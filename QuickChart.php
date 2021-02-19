@@ -49,7 +49,7 @@ class QuickChart {
 
   function getConfigStr() {
     if (is_array($this->config)) {
-      return json_encode($this->$config);
+      return json_encode($this->config);
     }
     return $this->config;
   }
