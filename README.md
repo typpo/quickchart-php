@@ -5,7 +5,7 @@ A PHP client for the [quickchart.io](https://quickchart.io/) chart image API.
 
 # Installation
 
-Use the `QuickChart.php` library in this project, or install from packagist.
+Use the `QuickChart.php` library in this project, or [install from packagist](https://packagist.org/packages/ianw/quickchart).
 
 ```
 composer require ianw/quickchart
