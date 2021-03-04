@@ -73,7 +73,20 @@ The background color of the chart. Any valid HTML color works. Defaults to #ffff
 ### devicePixelRatio: float
 The device pixel ratio of the chart. This will multiply the number of pixels by the value. This is usually used for retina displays. Defaults to 1.0.
 
+### apiKey: string
+Your QuickChart API key, if you have one.
+
 ## Setting properties
+
+Each option above has an associated function call that you can invoke on your `QuickChart` object:
+
+ - `setConfig($config)`
+ - `setWidth($width)`
+ - `setHeight($height)`
+ - `setFormat($format)`
+ - `setBackgroundColor($backgroundColor)`
+ - `setDevicePixelRatio($devicePixelRatio)`
+ - `setApiKey($apiKey)`
 
 ## Getting URLs
 

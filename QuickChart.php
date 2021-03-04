@@ -11,6 +11,7 @@ class QuickChart {
   public $devicePixelRatio;
   public $format;
   public $backgroundColor;
+  public $apiKey;
 
   function __construct($options = array()) {
     $this->protocol = isset($options['protocol']) ? $options['protocol'] : 'https';
@@ -21,6 +22,7 @@ class QuickChart {
     $this->devicePixelRatio = isset($options['devicePixelRatio']) ? $options['devicePixelRatio'] : 1.0;
     $this->format = isset($options['format']) ? $options['format'] : 'png';
     $this->backgroundColor = isset($options['backgroundColor']) ? $options['backgroundColor'] : 'transparent';
+    $this->apiKey = isset($options['apiKey']) ? $options['apiKey'] : null;
   }
 
   function setConfig($chartjsConfig) {
@@ -47,6 +49,10 @@ class QuickChart {
     $this->backgroundColor = $backgroundColor;
   }
 
+  function setApiKey($apiKey) {
+    $this->apiKey = $apiKey;
+  }
+
   function getConfigStr() {
     if (is_array($this->config)) {
       return json_encode($this->config);
@@ -64,6 +70,10 @@ class QuickChart {
 
     $url = sprintf('%s://%s/chart?c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $this->protocol, $this->host, $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
 
+    if ($this->apiKey) {
+      $url .= '&key=' . $this->apiKey;
+    }
+
     return $url;
   }
 
@@ -76,6 +86,9 @@ class QuickChart {
       'format' => $this->format,
       'chart' => $this->getConfigStr(),
     );
+    if ($this->apiKey) {
+      $postData['key'] = $this->apiKey;
+    }
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -93,6 +106,9 @@ class QuickChart {
       'format' => $this->format,
       'chart' => $this->getConfigStr(),
     );
+    if ($this->apiKey) {
+      $postData['key'] = $this->apiKey;
+    }
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
