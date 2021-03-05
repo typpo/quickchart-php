@@ -93,8 +93,15 @@ class QuickChart {
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
+
+    if ($result === false) {
+      throw new Exception(curl_error($ch), curl_errno($ch));
+    }
+
     curl_close($ch);
-    return json_decode($result, true)['url'];
+    // Note: do not dereference json_decode directly for 5.3 compatibility.
+    $ret = json_decode($result, true);
+    return $ret['url'];
   }
 
   function toBinary() {
