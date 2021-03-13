@@ -121,6 +121,8 @@ $chart->toFile('/tmp/myfile.png')
 
 Checkout the `examples` directory to see other usage.
 
-## Note to PHP5 users
+## Troubleshooting
 
-This package requires curl and json modules.
+**PHP5 users**: This package requires curl and json modules.
+
+**sslv3 handshake alert failure**: You are using an outdated version a `curl`.  Please upgrade curl on your machine.
