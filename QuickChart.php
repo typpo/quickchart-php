@@ -78,7 +78,10 @@ class QuickChart {
   }
 
   function getShortUrl() {
-    $ch = curl_init('https://quickchart.io/chart/create');
+    if ($this->host != 'quickchart.io') {
+      throw new Exception('Short URLs must use quickchart.io host'); 
+    }
+    $ch = curl_init($this->getRootEndpoint() . '/chart/create');
     $postData = array(
       'backgroundColor' => $this->backgroundColor,
       'width' => $this->width,
@@ -105,7 +108,7 @@ class QuickChart {
   }
 
   function toBinary() {
-    $ch = curl_init('https://quickchart.io/chart');
+    $ch = curl_init($this->getRootEndpoint() . '/chart');
     $postData = array(
       'backgroundColor' => $this->backgroundColor,
       'width' => $this->width,
@@ -128,6 +131,10 @@ class QuickChart {
     $data = $this->toBinary();
     file_put_contents($path, $data);
   }
+
+  protected function getRootEndpoint() {
+    return $this->protocol . '://' . $this->host . ':' . $this->port;
+  }
 }
 
-?>
+
