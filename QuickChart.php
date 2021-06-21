@@ -68,7 +68,7 @@ class QuickChart {
     $format = $this->format;
     $backgroundColor = $this->backgroundColor;
 
-    $url = sprintf('%s://%s/chart?c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $this->protocol, $this->host, $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
+    $url = sprintf('%s://%s:%s/chart?c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $this->protocol, $this->host, $this->port, $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
 
     if ($this->apiKey) {
       $url .= '&key=' . $this->apiKey;
