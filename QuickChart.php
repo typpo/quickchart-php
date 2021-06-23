@@ -68,7 +68,7 @@ class QuickChart {
     $format = $this->format;
     $backgroundColor = $this->backgroundColor;
 
-    $url = sprintf('%s://%s/chart?c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $this->protocol, $this->host, $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
+    $url = sprintf($this->getRootEndpoint() . '/chart?c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
 
     if ($this->apiKey) {
       $url .= '&key=' . $this->apiKey;
@@ -79,7 +79,7 @@ class QuickChart {
 
   function getShortUrl() {
     if ($this->host != 'quickchart.io') {
-      throw new Exception('Short URLs must use quickchart.io host'); 
+      throw new Exception('Short URLs must use quickchart.io host');
     }
     $ch = curl_init($this->getRootEndpoint() . '/chart/create');
     $postData = array(
