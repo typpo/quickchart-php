@@ -12,6 +12,7 @@ class QuickChart {
   public $format;
   public $backgroundColor;
   public $apiKey;
+  public $version;
 
   function __construct($options = array()) {
     $this->protocol = isset($options['protocol']) ? $options['protocol'] : 'https';
@@ -23,6 +24,7 @@ class QuickChart {
     $this->format = isset($options['format']) ? $options['format'] : 'png';
     $this->backgroundColor = isset($options['backgroundColor']) ? $options['backgroundColor'] : 'transparent';
     $this->apiKey = isset($options['apiKey']) ? $options['apiKey'] : null;
+    $this->version = isset($options['version']) ? $options['version'] : null;
   }
 
   function setConfig($chartjsConfig) {
@@ -53,6 +55,10 @@ class QuickChart {
     $this->apiKey = $apiKey;
   }
 
+  function setVersion($version) {
+    $this->version = $version;
+  }
+
   function getConfigStr() {
     if (is_array($this->config)) {
       return json_encode($this->config);
@@ -74,6 +80,10 @@ class QuickChart {
       $url .= '&key=' . $this->apiKey;
     }
 
+    if ($this->version) {
+      $url .= '&version=' . $this->version;
+    }
+
     return $url;
   }
 
@@ -91,6 +101,9 @@ class QuickChart {
     );
     if ($this->apiKey) {
       $postData['key'] = $this->apiKey;
+    }
+    if ($this->version) {
+      $postData['version'] = $this->version;
     }
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -118,6 +131,9 @@ class QuickChart {
     );
     if ($this->apiKey) {
       $postData['key'] = $this->apiKey;
+    }
+    if ($this->version) {
+      $postData['version'] = $this->version;
     }
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
