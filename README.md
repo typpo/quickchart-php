@@ -129,4 +129,4 @@ Checkout the `examples` directory to see other usage.
 
 **PHP5 users**: This package requires curl and json modules.
 
-**sslv3 handshake alert failure**: You are using an outdated version a `curl`.  Please upgrade curl on your machine.
+**sslv3 handshake alert failure**: You are using an outdated version of `curl`.  Please upgrade curl on your machine.
