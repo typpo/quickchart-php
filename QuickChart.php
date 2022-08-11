@@ -96,6 +96,7 @@ class QuickChart {
       'backgroundColor' => $this->backgroundColor,
       'width' => $this->width,
       'height' => $this->height,
+      'devicePixelRatio' => number_format($this->devicePixelRatio, 1),
       'format' => $this->format,
       'chart' => $this->getConfigStr(),
     );
