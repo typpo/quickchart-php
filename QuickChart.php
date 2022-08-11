@@ -81,7 +81,7 @@ class QuickChart {
     }
 
     if ($this->version) {
-      $url .= '&version=' . $this->version;
+      $url .= '&v=' . $this->version;
     }
 
     return $url;
