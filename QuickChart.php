@@ -125,6 +125,7 @@ class QuickChart {
     $ch = curl_init($this->getRootEndpoint() . '/chart');
     $postData = array(
       'backgroundColor' => $this->backgroundColor,
+      'devicePixelRatio' => $this->devicePixelRatio,
       'width' => $this->width,
       'height' => $this->height,
       'format' => $this->format,
