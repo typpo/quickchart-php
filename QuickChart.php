@@ -1,5 +1,7 @@
 <?php
 
+$USER_AGENT = 'quickchart-php (1.0.0)';
+
 class QuickChart {
   public $protocol;
   public $host;
@@ -74,7 +76,7 @@ class QuickChart {
     $format = $this->format;
     $backgroundColor = $this->backgroundColor;
 
-    $url = sprintf($this->getRootEndpoint() . '/chart?c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
+    $url = sprintf($this->getRootEndpoint() . '/chart?ref=qc-php&c=%s&w=%d&h=%d&devicePixelRatio=%f&format=%s&bkg=%s', $configStr, $width, $height, $devicePixelRatio, $format, $backgroundColor);
 
     if ($this->apiKey) {
       $url .= '&key=' . $this->apiKey;
@@ -107,7 +109,10 @@ class QuickChart {
       $postData['version'] = $this->version;
     }
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      'Content-Type:application/json',
+      "User-Agent:$USER_AGENT",
+    ));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
 
