@@ -142,15 +142,25 @@ class QuickChart {
     if ($this->version) {
       $postData['version'] = $this->version;
     }
+
+    $responseHeaders = [];
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_HEADERFUNCTION, function($curl, $header) use (&$responseHeaders) {
+      $len = strlen($header);
+      $header = explode(':', $header, 2);
+      if (count($header) < 2) { // ignore invalid headers
+        return $len;
+      }
+      $responseHeaders[strtolower(trim($header[0]))][] = trim($header[1]);
+      return $len;
+    });
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
     if ($result === false) {
       $error = curl_error($ch);
-      curl_close($ch);
       throw new Exception("Curl error: $error");
     }
 
@@ -160,25 +170,12 @@ class QuickChart {
       return $result;
     }
 
-    // Parse response headers
-    $responseHeaders = [];
-    $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-    $headerStr = substr($result, 0, $headerSize);
-    foreach (explode("\r\n", $headerStr) as $i => $line) {
-      if ($i === 0) {
-        $responseHeaders['http_code'] = $line;
-      } else {
-        list($key, $value) = explode(': ', $line);
-        $responseHeaders[$key] = $value;
-      }
-    }
-
-    $errorHeader = isset($responseHeaders['X-quickchart-error']) ? $responseHeaders['X-quickchart-error'] : null;
+    $errorHeader = isset($responseHeaders['x-quickchart-error'][0]) ? $responseHeaders['x-quickchart-error'][0] : null;
     if ($errorHeader) {
-      throw new Exception("QuickChart API returned an error with status code: $httpStatusCode. Error: $errorHeader");
+      throw new Exception("QuickChart API returned error with status code $httpStatusCode: $errorHeader");
     }
 
-    throw new Exception("QuickChart API returned an error with status code: $httpStatusCode. Response: $result");
+    throw new Exception("QuickChart API returned error with status code $httpStatusCode");
   }
 
   function toFile($path) {
