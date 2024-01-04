@@ -1,7 +1,5 @@
 <?php
 
-$USER_AGENT = 'quickchart-php (1.0.0)';
-
 class QuickChart {
   public $protocol;
   public $host;
@@ -15,6 +13,8 @@ class QuickChart {
   public $backgroundColor;
   public $apiKey;
   public $version;
+
+  const USER_AGENT = 'quickchart-php (1.0.0)';
 
   function __construct($options = array()) {
     $this->protocol = isset($options['protocol']) ? $options['protocol'] : 'https';
@@ -111,7 +111,7 @@ class QuickChart {
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
       'Content-Type:application/json',
-      "User-Agent:$USER_AGENT",
+      "User-Agent:" . QuickChart::USER_AGENT,
     ));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
