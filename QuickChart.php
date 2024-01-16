@@ -4,6 +4,7 @@ class QuickChart {
   public $protocol;
   public $host;
   public $port;
+  public $path;
 
   public $config;
   public $width;
@@ -20,6 +21,7 @@ class QuickChart {
     $this->protocol = isset($options['protocol']) ? $options['protocol'] : 'https';
     $this->host = isset($options['host']) ? $options['host'] : 'quickchart.io';
     $this->port = isset($options['port']) ? $options['port'] : 443;
+    $this->path = isset($options['path']) ? $options['path'] : false;
     $this->width = isset($options['width']) ? $options['width'] : 500;
     $this->height = isset($options['height']) ? $options['height'] : 300;
     $this->devicePixelRatio = isset($options['devicePixelRatio']) ? $options['devicePixelRatio'] : 1.0;
@@ -184,7 +186,7 @@ class QuickChart {
   }
 
   protected function getRootEndpoint() {
-    return $this->protocol . '://' . $this->host . ':' . $this->port;
+    return $this->protocol . '://' . $this->host . ( $this->port ? ':' . $this->port : '' ) . ( $this->path ? $this->path : '' ) ;
   }
 }
 
